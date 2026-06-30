@@ -17,9 +17,10 @@ refhub --help
 ```
 
 2. Use `REFHUB_API_KEY` from the environment. A one-off `--api-key` flag may override it.
-3. Resolve vault IDs with `refhub vaults list` before operating on a vault. Do not infer IDs from names.
-4. Prefer JSON output for downstream reasoning. Use `--table` only for human-facing summaries.
-5. For unsupported account setup tasks, ask the user to use the RefHub web app.
+3. Keep the key out of chat history. Prefer loading `REFHUB_API_KEY` from a local shell env file or wrapper script before starting Codex.
+4. Resolve vault IDs with `refhub vaults list` before operating on a vault. Do not infer IDs from names.
+5. Prefer JSON output for downstream reasoning. Use `--table` only for human-facing summaries.
+6. For unsupported account setup tasks, ask the user to use the RefHub web app.
 
 ## Authentication Rules
 

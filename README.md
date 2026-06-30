@@ -25,6 +25,35 @@ Set an API key for normal data workflows:
 export REFHUB_API_KEY="rhk_..."
 ```
 
+Do not paste live API keys into Codex chat. Load them from the shell environment instead.
+
+## Secret Injection
+
+Recommended pattern: keep the key in a local env file and launch Codex through a wrapper.
+
+```sh
+mkdir -p ~/.config/refhub
+cat > ~/.config/refhub/env <<'EOF'
+export REFHUB_API_KEY='rhk_REPLACE_ME'
+EOF
+chmod 600 ~/.config/refhub/env
+```
+
+Optional wrapper:
+
+```sh
+mkdir -p ~/.local/bin
+cat > ~/.local/bin/codex-refhub <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+source "$HOME/.config/refhub/env"
+exec codex "$@"
+EOF
+chmod +x ~/.local/bin/codex-refhub
+```
+
+Then start Codex with `codex-refhub`. The skill and `@refhub/cli` pick up `REFHUB_API_KEY` from the environment, not from chat.
+
 ## Use
 
 Invoke the skill from Codex:
