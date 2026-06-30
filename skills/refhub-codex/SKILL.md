@@ -67,7 +67,7 @@ Browser/session upload routes stay under `/api/v1/google-drive/...`. Do not poin
 
 ## When More Detail Is Needed
 
-Read `references/refhub-api-contract.md` before:
+Read `../../references/refhub-api-contract.md` before:
 
 - calling HTTP routes directly instead of the CLI
 - handling permission errors or auth-mode confusion

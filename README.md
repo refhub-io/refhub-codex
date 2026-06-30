@@ -4,7 +4,9 @@ Codex-native RefHub skill packaging.
 
 This repo keeps RefHub's Codex integration separate from the Claude Code plugin marketplace. The skill uses `@refhub/cli` as its execution layer and describes the current RefHub public API contract for agent workflows.
 
-## Install
+## Install As A Codex Plugin
+
+This is the preferred distribution path for other Codex users. It follows OpenAI's current plugin packaging model: this repo contains a `.codex-plugin/plugin.json` manifest, a repo marketplace at `.agents/plugins/marketplace.json`, and the RefHub skill under `skills/refhub-codex/`.
 
 Install the RefHub CLI first:
 
@@ -12,11 +14,35 @@ Install the RefHub CLI first:
 npm install -g @refhub/cli
 ```
 
-Then install or copy this skill into Codex's skills directory:
+Then add the marketplace:
 
 ```sh
-mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
-cp -R refhub-codex "${CODEX_HOME:-$HOME/.codex}/skills/refhub-codex"
+codex plugin marketplace add https://github.com/refhub-io/refhub-codex.git
+```
+
+Open the plugin directory and install **RefHub Codex** from the `refhub-codex` marketplace:
+
+```text
+/plugins
+```
+
+After installation, start a new Codex thread and invoke the plugin or skill with `@refhub-codex` / `$refhub-codex`.
+
+## Install As A Local Skill
+
+Use this path while iterating locally or when plugin support is not available in your Codex build.
+
+Install the RefHub CLI first:
+
+```sh
+npm install -g @refhub/cli
+```
+
+Then copy the skill into Codex's user skill directory:
+
+```sh
+mkdir -p "$HOME/.agents/skills/refhub-codex"
+cp -R skills/refhub-codex/. "$HOME/.agents/skills/refhub-codex/"
 ```
 
 Set an API key for normal data workflows:
@@ -24,6 +50,35 @@ Set an API key for normal data workflows:
 ```sh
 export REFHUB_API_KEY="rhk_..."
 ```
+
+Do not paste live API keys into Codex chat. Load them from the shell environment instead.
+
+## Secret Injection
+
+Recommended pattern: keep the key in a local env file and launch Codex through a wrapper.
+
+```sh
+mkdir -p ~/.config/refhub
+cat > ~/.config/refhub/env <<'EOF'
+export REFHUB_API_KEY='REPLACE_WITH_REFHUB_API_KEY'
+EOF
+chmod 600 ~/.config/refhub/env
+```
+
+Optional wrapper:
+
+```sh
+mkdir -p ~/.local/bin
+cat > ~/.local/bin/codex-refhub <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+source "$HOME/.config/refhub/env"
+exec codex "$@"
+EOF
+chmod +x ~/.local/bin/codex-refhub
+```
+
+Then start Codex with `codex-refhub`. The plugin/skill and `@refhub/cli` pick up `REFHUB_API_KEY` from the environment, not from chat.
 
 ## Use
 
@@ -40,9 +95,13 @@ Account setup/admin workflows such as API-key creation, Google Drive connect/dis
 ## Layout
 
 ```text
+.codex-plugin/plugin.json
+.agents/plugins/marketplace.json
 SKILL.md
 agents/openai.yaml
 references/refhub-api-contract.md
+skills/refhub-codex/SKILL.md
+skills/refhub-codex/agents/openai.yaml
 ```
 
 ## Related
