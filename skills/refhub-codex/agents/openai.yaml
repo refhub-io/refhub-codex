@@ -1,0 +1,4 @@
+interface:
+  display_name: "RefHub Codex"
+  short_description: "Operate RefHub through the public API"
+  default_prompt: "Use $refhub-codex to search a RefHub vault and summarize the matching papers."

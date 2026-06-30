@@ -1,0 +1,20 @@
+{
+  "name": "refhub-codex",
+  "interface": {
+    "displayName": "RefHub Codex"
+  },
+  "plugins": [
+    {
+      "name": "refhub-codex",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

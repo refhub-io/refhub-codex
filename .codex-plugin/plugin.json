@@ -1,0 +1,29 @@
+{
+  "name": "refhub-codex",
+  "version": "1.0.0",
+  "description": "Operate RefHub through its public API and CLI from Codex.",
+  "author": {
+    "name": "refhub-io",
+    "url": "https://github.com/refhub-io"
+  },
+  "homepage": "https://github.com/refhub-io/refhub-codex",
+  "repository": "https://github.com/refhub-io/refhub-codex",
+  "license": "MIT",
+  "keywords": ["refhub", "references", "research", "codex", "api"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "RefHub Codex",
+    "shortDescription": "Operate RefHub through the public API.",
+    "longDescription": "Search, read, import, export, audit, enrich, and update RefHub vault content from Codex using @refhub/cli and scoped RefHub API keys.",
+    "developerName": "refhub-io",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://refhub.io",
+    "defaultPrompt": [
+      "Search my RefHub vault for graph layout papers.",
+      "Import a BibTeX entry into my RefHub vault.",
+      "Enrich RefHub items with Semantic Scholar metadata."
+    ],
+    "brandColor": "#2563EB"
+  }
+}
