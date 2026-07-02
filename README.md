@@ -1,52 +1,20 @@
-# refhub-codex
+# refhub-codex (archived)
 
-Codex-native RefHub skill packaging.
+> // deprecated — superseded by refhub-skill
 
-This repo keeps RefHub's Codex integration separate from the Claude Code plugin marketplace. The skill uses `@refhub/cli` as its execution layer and describes the current RefHub public API contract for agent workflows.
+This repo is archived. It shipped a bare `agents/openai.yaml` at the root with no `.codex-plugin/plugin.json`, so it was never actually installable as a real Codex plugin per Codex's plugin schema (developers.openai.com/codex/plugins).
 
-## Install
+Codex packaging now lives directly in [`refhub-skill`](https://github.com/refhub-io/refhub-skill), alongside its Claude Code plugin manifest, using the verified `.codex-plugin/plugin.json` + `.agents/plugins/marketplace.json` format:
 
-Install the RefHub CLI first:
-
-```sh
-npm install -g @refhub/cli
+```json
+{
+  "name": "refhub-skill",
+  "source": { "source": "github", "repo": "refhub-io/refhub-skill" },
+  "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+  "category": "Productivity"
+}
 ```
 
-Then install or copy this skill into Codex's skills directory:
+add that entry to your Codex plugin marketplace configuration, or clone `refhub-skill` locally and point Codex at it (see its README for details).
 
-```sh
-mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
-cp -R refhub-codex "${CODEX_HOME:-$HOME/.codex}/skills/refhub-codex"
-```
-
-Set an API key for normal data workflows:
-
-```sh
-export REFHUB_API_KEY="rhk_..."
-```
-
-## Use
-
-Invoke the skill from Codex:
-
-```text
-Use $refhub-codex to search my RefHub vault for papers about graph layout and summarize the top matches.
-```
-
-The skill covers API-key workflows for vaults, items, tags, relations, import, search, export, audit, Semantic Scholar discovery/enrichment, and item-scoped PDF uploads. Small PDFs use the raw item upload route. Larger vault-item PDFs use the API-key resumable Google Drive flow.
-
-Account setup/admin workflows such as API-key creation, Google Drive connect/disconnect, and global audit remain RefHub web app or session-JWT workflows.
-
-## Layout
-
-```text
-SKILL.md
-agents/openai.yaml
-references/refhub-api-contract.md
-```
-
-## Related
-
-- [refhub-skill](https://github.com/refhub-io/refhub-skill): Claude Code skill/plugin packaging
-- [refhub-claude](https://github.com/refhub-io/refhub-claude): Claude Code marketplace
-- [@refhub/cli](https://www.npmjs.com/package/@refhub/cli): CLI execution layer
+No further changes will be made to this repository.
